@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}School Reviews{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Georgia:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body style="font-family: 'Inter', 'Nunito', 'Segoe UI', Arial, sans-serif; background: #fcfbfa; font-size: 1.1rem; color: #222;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('add_review') }}">School Reviews</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_review') }}">Share Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('reviews') }}">Browse Reviews</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4 animate__animated animate__fadeInUp" style="max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; background: none; border-radius: 0; box-shadow: none;">
+    <style>
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-weight: 700;
+        letter-spacing: -1px;
+        color: #222;
+        margin-bottom: 1.5rem;
+      }
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 2rem;
+      }
+      h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.15;
+      }
+      .navbar, .shadow-sm, .card, .table, .alert {
+        box-shadow: none !important;
+        border: none !important;
+        background: none !important;
+      }
+      .btn-primary, .btn {
+        border-radius: 1.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        background: #222;
+        color: #fff;
+        border: none;
+        padding: 0.6rem 2rem;
+        transition: background 0.2s;
+      }
+      .btn-primary:hover, .btn-primary:focus, .btn:hover, .btn:focus {
+        background: #444;
+        color: #fff;
+      }
+      .form-control, input, textarea, select {
+        border-radius: 0.75rem;
+        border: 1.5px solid #e0e0e0;
+        background: #fff;
+        font-size: 1.1rem;
+        padding: 0.7rem 1.2rem;
+        box-shadow: none;
+        margin-bottom: 1.2rem;
+      }
+      .form-control:focus, input:focus, textarea:focus, select:focus {
+        border-color: #bdbdbd;
+        outline: none;
+        box-shadow: none;
+      }
+      .table {
+        background: none;
+        border: none;
+      }
+      .table th, .table td {
+        border: none;
+        background: none;
+        padding: 1.1rem 0.7rem;
+      }
+      .table thead th {
+        font-weight: 700;
+        color: #222;
+        background: none;
+        border-bottom: 2px solid #e0e0e0;
+      }
+      .table-striped > tbody > tr:nth-of-type(odd) {
+        background: #f7f7f7;
+      }
+      .table-striped > tbody > tr:nth-of-type(even) {
+        background: #fff;
+      }
+      .alert {
+        background: #fffbe6;
+        color: #222;
+        border-radius: 0.75rem;
+        border: 1.5px solid #ffe58f;
+      }
+      .navbar {
+        background: none !important;
+        padding: 1.5rem 0 1.5rem 0;
+      }
+      .navbar-brand {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #222 !important;
+        letter-spacing: -1px;
+      }
+      .nav-link {
+        color: #222 !important;
+        font-weight: 500;
+        font-size: 1.1rem;
+        margin-left: 1.5rem;
+      }
+      .nav-link:hover, .nav-link:focus {
+        color: #444 !important;
+      }
+      body {
+        min-height: 100vh;
+      }
+    </style>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
