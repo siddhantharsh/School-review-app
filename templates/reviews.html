@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}All Reviews{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>School Reviews</h2>
+    <div class="d-flex align-items-center">
+        <input id="schoolSearch" class="form-control me-2 w-auto" type="search" style="width: 250px;" placeholder="Search school name" aria-label="Search">
+        <a href="{{ url_for('add_review') }}" class="btn btn-primary ms-2">Share Your Review</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('schoolSearch');
+    const tableRows = document.querySelectorAll('table tbody tr');
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value.toLowerCase();
+        tableRows.forEach(row => {
+            const schoolCell = row.querySelector('td strong');
+            if (schoolCell && schoolCell.textContent.toLowerCase().includes(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+
+{% if reviews %}
+    <div class="table-responsive d-flex justify-content-center animate__animated animate__fadeIn">
+        <table class="table" style="border-radius: 1rem; overflow: hidden; border: none; font-size: 1.08rem;">
+            <thead class="table-dark">
+                <tr>
+                    <th>School</th>
+                    <th>Reviewer</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td><strong>{{ review.school_name }}</strong></td>
+                    <td>{{ review.reviewer_name }}</td>
+                    <td>
+                        <span class="badge bg-{{ 'danger' if review.rating <= 2 else 'warning' if review.rating == 3 else 'success' }}">
+                            {{ review.rating }}/5
+                        </span>
+                    </td>
+                    <td>{{ review.comment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="text-muted text-center mt-3">
+        {{ reviews|length }} review{{ 's' if reviews|length != 1 else '' }} total
+    </div>
+{% else %}
+    <div class="text-center py-5 animate__animated animate__fadeIn">
+        <h4 class="text-muted">No reviews yet</h4>
+        <p class="text-muted">Be the first to share your experience with a school in your city!</p>
+        <a href="{{ url_for('add_review') }}" class="btn btn-primary">Write the First Review</a>
+    </div>
+{% endif %}
+{% endblock %} 
